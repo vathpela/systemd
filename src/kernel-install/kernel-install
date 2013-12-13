@@ -115,10 +115,19 @@ case $COMMAND in
         done
         ;;
 
+   finalize)
+        for f in "${PLUGINS[@]}"; do
+            if [[ -x $f ]]; then
+                "$f" finalize "$KERNEL_VERSION" "$BOOT_DIR_ABS" "$KERNEL_IMAGE"
+                ((ret+=$?))
+            fi
+        done
+        ;;
+
     remove)
         for f in "${PLUGINS[@]}"; do
             if [[ -x $f ]]; then
-                "$f" remove "$KERNEL_VERSION" "$BOOT_DIR_ABS"
+                "$f" remove "$KERNEL_VERSION" "$BOOT_DIR_ABS" "$KERNEL_IMAGE"
                 ((ret+=$?))
             fi
         done
