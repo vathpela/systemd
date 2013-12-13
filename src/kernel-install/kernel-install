@@ -115,6 +115,24 @@ case $COMMAND in
         done
         ;;
 
+    addramfs)
+        if [[ ! "$KERNEL_IMAGE" ]]; then
+            echo "Command 'addramfs' requires an argument" >&2
+            exit 1
+        fi
+        if [ ! -d "$BOOT_DIR_ABS" ]; then
+            echo "Command 'addramfs' requires a previous 'add' to succeed" >&2
+            exit 1
+        fi
+
+        for f in "${PLUGINS[@]}"; do
+            if [[ -x $f ]]; then
+                "$f" addramfs "$KERNEL_VERSION" "$BOOT_DIR_ABS" "$KERNEL_IMAGE"
+                ((ret+=$?))
+            fi
+        done
+        ;;
+
    finalize)
         for f in "${PLUGINS[@]}"; do
             if [[ -x $f ]]; then
