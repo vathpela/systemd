@@ -25,6 +25,14 @@ if [[ $COMMAND == remove ]]; then
     exec rm -f "$LOADER_ENTRY"
 fi
 
+if [[ $COMMAND == addramfs ]]; then
+    exit 0
+fi
+
+if [[ $COMMAND == finalize ]]; then
+    exit 0
+fi
+
 if ! [[ $COMMAND == add ]]; then
     exit 1
 fi
